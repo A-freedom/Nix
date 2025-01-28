@@ -11,10 +11,10 @@
 
   # Basic system settings
   networking.hostName = "nixos"; # Replace with your desired hostname
-  networking.useDHCP = true;
 
-  # Enable parallel downloads
-  nix.settings.max-parallel-downloads = 10;
+  # Enable NetworkManager (manages DHCP and networking)
+  networking.networkmanager.enable = true;
+  networking.useDHCP = lib.mkForce false; # Disable manual DHCP to avoid conflict
 
   # Enable GNOME desktop environment
   services.xserver.enable = true;
@@ -25,14 +25,11 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
-  # Enable networking
-  networking.networkmanager.enable = true;
-
   # Timezone and localization
-  time.timeZone = "Etc/UTC"; # Replace with your local timezone, e.g., "America/New_York"
+  time.timeZone = "Etc/UTC"; # Replace with your local timezone
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Users
+  # User configuration
   users.users.alimussa = {
     isNormalUser = true;
     extraGroups = [ "wheel" "audio" "video" "input" ]; # Add to essential groups
